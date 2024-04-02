@@ -1,0 +1,36 @@
+[
+    {
+        "tipo": "VentaLibre",
+        "sku": "VL001",
+        "nombre_comercial": "Aspirina",
+        "nombre_generico": "Ácido Acetilsalicílico",
+        "precio": 0.50,
+        "impuesto": 0.12,
+        "peso": 50,
+        "cantidad": 100,
+        "contraindicaciones": "Puede causar irritación estomacal"
+    },
+    {
+        "tipo": "Restringido",
+        "sku": "RE001",
+        "nombre_comercial": "Amoxicilina",
+        "nombre_generico": "Amoxicilina Trihidratada",
+        "precio": 1.20,
+        "impuesto": 0.12,
+        "peso": 100,
+        "cantidad": 50,
+        "dosis_maxima": "500 mg cada 8 horas",
+        "medico_autoriza": "Dr. House"
+    },
+    {
+        "tipo": "VentaLibre",
+        "sku": "VL002",
+        "nombre_comercial": "Ibuprofeno",
+        "nombre_generico": "Ibuprofeno",
+        "precio": 0.30,
+        "impuesto": 0.12,
+        "peso": 25,
+        "cantidad": 150,
+        "contraindicaciones": "Evitar en embarazo"
+    }
+]
