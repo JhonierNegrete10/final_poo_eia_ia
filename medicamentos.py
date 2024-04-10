@@ -51,6 +51,7 @@ class VentaLibre(Medicamento):
             sku, nombre_comercial, nombre_generico, precio, impuesto, peso, cantidad
         )
         self.contraindicaciones = contraindicaciones
+        # self.tipo = self.__class__.__name__
 
     @staticmethod
     def medicamento_ficticio(nombre_medicamento: str, sku):
@@ -88,8 +89,9 @@ class Restringido(Medicamento):
         if isinstance(medico_autoriza, Medico):
             self.medico_autoriza = medico_autoriza
         elif isinstance(medico_autoriza, str):
-            medico_dict = json.loads(medico_autoriza.replace(";", ","))
-            self.medico_autoriza = Medico.from_dict(medico_dict)
+            medico_autoriza: str = medico_autoriza.replace(";", ",")
+            medico_dict = json.loads(medico_autoriza.replace("'", '"'))
+            self.medico_autoriza: Medico = Medico.from_dict(medico_dict)
 
     @staticmethod
     def medicamento_ficticio(nombre_medicamento: str, sku):
@@ -115,10 +117,6 @@ class MedicamentoFacturado(CustomABC):
         self.precio_unitario = precio_unitario
         self.total = precio_unitario * cantidad
 
-    # def to_dict(self):
-    #     return {
-    #         "medicamento_sku": self.medicamento.sku,
-    #         "cantidad": self.cantidad,
-    #         "precio_unitario": self.precio_unitario,
-    #         "total": self.total,
-    #     }
+    def imprimir(self):
+        return f"SKU:{self.medicamento.sku} - {self.medicamento.nombre_comercial} \
+- {self.precio_unitario:.2f} x {self.cantidad} - Total: {self.total:.2f}"

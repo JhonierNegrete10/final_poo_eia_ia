@@ -4,6 +4,7 @@ from datetime import datetime
 
 from cliente import Cliente, CustomABC
 from medicamentos import Medicamento, MedicamentoFacturado
+from utils import add_box
 
 
 # Clase Factura
@@ -11,10 +12,12 @@ class Factura(CustomABC):
     def __init__(self, cliente: Cliente):
         self.cliente = cliente
         self.fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.medicamentos_facturados: dict[str, MedicamentoFacturado] = dict()
+        self.medicamentos_facturados: list[MedicamentoFacturado] = list()
         self.total = 0
 
-    def agregar_medicamento(self, medicamento: Medicamento, cantidad):
+    def agregar_medicamento(
+        self, medicamento: Medicamento, cantidad
+    ) -> tuple[bool, None | MedicamentoFacturado]:
         if medicamento.cantidad < cantidad:
             print(
                 f"No hay suficiente inventario para el medicamento: \
@@ -22,61 +25,52 @@ class Factura(CustomABC):
                 hay solo {medicamento.cantidad} en vez {cantidad}\
                 "
             )
-            return None
+            return (False, None)
         precio_con_impuesto = medicamento.calcular_precio_con_impuesto()
         medicamento_facturado = MedicamentoFacturado(
             medicamento, cantidad, precio_con_impuesto
         )
-        self.medicamentos_facturados[medicamento_facturado.medicamento.sku] = (
-            medicamento_facturado
-        )
+        self.medicamentos_facturados.append(medicamento_facturado)
         self.total += medicamento_facturado.total
         medicamento.cantidad -= cantidad
-        return True
+        return (True, medicamento_facturado)
 
     @staticmethod
     def crear_factura_ficticia(cliente: Cliente, inventario: list[Medicamento]):
         factura = Factura(cliente)
-        for _ in range(random.randint(1, 5)):  # Añadir entre 1 y 5 medicamentos
+        for _ in range(random.randint(3, 7)):  # Añadir entre 1 y 5 medicamentos
             medicamento = random.choice(inventario)
-            cantidad = random.randint(1, 3)  # Cantidad aleatoria entre 1 y 3
-            done = factura.agregar_medicamento(medicamento, cantidad)
+            cantidad = random.randint(1, 10)  # Cantidad aleatoria entre 1 y 3
+            done, medicamento_facturado = factura.agregar_medicamento(
+                medicamento, cantidad
+            )
             if done:
-                # todo: change presentation => be simple 
-                print(f"Medicamento agregado: {medicamento}")
-        print("\n\n")
+                print()
+                print(f"Medicamento agregado: {medicamento_facturado.imprimir()}")
         return factura
 
     def imprimir_factura(self):
-        result = ""
-        result += f"Factura: {self.fecha} \
+        result = f"    Factura: {self.fecha} \
             \n- Cliente: {self.cliente.nombre} \
             \n- Cédula: {self.cliente.cedula} \n\n"
 
-        for medicamento_facturado in self.medicamentos_facturados.values():
+        for medicamento_facturado in self.medicamentos_facturados:
             result += f"{medicamento_facturado.medicamento.nombre_comercial} \
+                    \n - SKU: {medicamento_facturado.medicamento.sku} \
                     \n - Cantidad: {medicamento_facturado.cantidad} \
-                    \n - Precio unitario: {medicamento_facturado.precio_unitario} \
-                    \n - Total: {medicamento_facturado.total} \n"
+                    \n - Precio unitario: {medicamento_facturado.precio_unitario:.2f} \
+                    \n - Total: {medicamento_facturado.total:.2f} \n"
 
-        result += f"\n Total a pagar: {self.total}"
+        result += f"\n Total a pagar: {self.total:.2f}"
         result += "\n\n"
         return result
 
-    def __repr__(self):
-        resultado = super().__repr__()
-        return resultado
-
-    # todo: Guardar factura en Factura
-    # Esta factura iterará sobre medicamento facturado
-
     def guardar_factura(self, facturas_dir="./facturas"):
-        # Todo: añadir validación de tipo
         if not os.path.exists(facturas_dir):
             os.makedirs(facturas_dir)
 
         factura_filename = f"factura_{self.cliente.cedula}_{self.fecha.replace(':', '').replace('-', '').replace(' ', '_')}.txt"
         factura_path = os.path.join(facturas_dir, factura_filename)
 
-        with open(factura_path, "w") as file:
-            file.write(self.imprimir_factura())
+        with open(factura_path, "w", encoding="UTF-8") as file:
+            file.write(add_box(self.imprimir_factura()))

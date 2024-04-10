@@ -23,7 +23,10 @@ class CustomABC(ABC):
 
     def to_txt(self):
         """Export object attributes to TXT format."""
-        lines = [f"{value}" for _, value in vars(self).items()]
+        lines = [
+            f"{value}" if type(value) in [str, int, float] else f"{value.to_dict()}"
+            for _, value in vars(self).items()
+        ]
         return ";".join(lines)
 
     def to_json(self):
@@ -38,9 +41,12 @@ class CustomABC(ABC):
         """Export the schema of the object as a dictionary."""
         return {key: type(value) for key, value in vars(self).items()}
 
-    def to_dict(self):
+    def to_dict(self, tipo=False):
         """Export object attributes of the object as a dictionary."""
-        return {key: value for key, value in vars(self).items()}
+        return {
+            key: value if type(value) in [str, int, float] else value.to_dict()
+            for key, value in vars(self).items()
+        }
 
     @staticmethod
     def validate_attr(input_attr: dict, schema: dict):
@@ -54,12 +60,11 @@ class CustomABC(ABC):
             bool: confirmation if the input validation is correct
         """
         for attr, _type in schema.items():
-            if attr not in input_attr.keys() and attr != "medico_autoriza":
+            if attr not in input_attr.keys():
                 print(f"Falta el atributo requerido: {attr}")
                 return False
             try:
-                if attr != "medico_autoriza":
-                    converted_value = _type(input_attr[attr])
+                converted_value = _type(input_attr[attr])
 
             except (ValueError, TypeError):
                 print(
@@ -108,7 +113,7 @@ class Medico(Usuario):
 
 
 if __name__ == "__main__":
-    # Create a User instance
+    # Debug: Create a User instance
     user = Medico.medico_ficticio()
     user = deepcopy(user)
     print("copy: ", user)
