@@ -1,3 +1,4 @@
+import json
 import random
 from abc import abstractmethod
 
@@ -77,13 +78,18 @@ class Restringido(Medicamento):
         peso,
         cantidad,
         dosis_maxima: str,
-        medico_autoriza: Medico,
+        medico_autoriza: Medico | dict,
     ):
         super().__init__(
             sku, nombre_comercial, nombre_generico, precio, impuesto, peso, cantidad
         )
         self.dosis_maxima = dosis_maxima
-        self.medico_autoriza = medico_autoriza
+
+        if isinstance(medico_autoriza, Medico):
+            self.medico_autoriza = medico_autoriza
+        elif isinstance(medico_autoriza, str):
+            medico_dict = json.loads(medico_autoriza.replace(";", ","))
+            self.medico_autoriza = Medico.from_dict(medico_dict)
 
     @staticmethod
     def medicamento_ficticio(nombre_medicamento: str, sku):
@@ -104,7 +110,7 @@ class MedicamentoFacturado(CustomABC):
     def __init__(
         self, medicamento: Medicamento, cantidad: float, precio_unitario: float
     ):
-        self.medicamento = medicamento
+        self.medicamento = medicamento.copy()
         self.cantidad = cantidad
         self.precio_unitario = precio_unitario
         self.total = precio_unitario * cantidad

@@ -6,6 +6,7 @@ import random
 from cliente import Cliente, Medico
 from factura import Factura
 from medicamentos import Medicamento, Restringido, VentaLibre
+from utils import add_box
 
 
 class Inventario:
@@ -34,8 +35,18 @@ class Inventario:
 
     # Método para cargar inventario desde un archivo
     def cargar_inventario_desde_archivo(self, archivo="./inventario.txt"):
+        # Validaciones que el archivo exista
+        if not os.path.exists(archivo):
+            print(
+                add_box(
+                    "\n  Error: El archivo especificado no existe."
+                    + f"\n {archivo=} \n no existe en la carpeta:  {os.getcwd()}"
+                    + "\n\n"
+                )
+            )
+            return
+
         extension = os.path.splitext(archivo)[1]
-        # todo: Validaciones que el archivo exista
         if extension == ".csv":
             self.cargar_inventario_csv(archivo)
         elif extension == ".json":
@@ -43,32 +54,47 @@ class Inventario:
         elif extension == ".txt":
             self.cargar_inventario_txt(archivo)
         else:
-            print("Formato de archivo no soportado.")
+            print(add_box("\n Error: Formato de archivo no soportado. \n\n"))
 
     def cargar_inventario_csv(self, archivo):
+        venta_libre_ficticio: VentaLibre = VentaLibre.medicamento_ficticio("fake", 123)
+        restringido_ficticio: Restringido = Restringido.medicamento_ficticio(
+            "fake", 123
+        )
         with open(archivo, mode="r", newline="", encoding="UTF-8") as file:
-            print(file)
             reader = csv.DictReader(file)
-            print(reader)
 
             for row in reader:
                 tipo = row.pop("tipo")
                 if tipo == "VentaLibre":
+                    # eliminar variables que no corresponden
                     row.pop("dosis_maxima")
                     row.pop("medico_autoriza")
-                    medicamento = VentaLibre(**row)
+                    #
+                    if VentaLibre.validate_attr(
+                        row, venta_libre_ficticio.export_schema_types()
+                    ):
+                        medicamento = VentaLibre(**row)
+                    else:
+                        print(
+                            add_box("Error intentar crear VentaLibre cargado por csv")
+                        )
                 elif tipo == "Restringido":
                     row.pop("contraindicaciones")
-                    medicamento = Restringido(**row)
+                    schema = restringido_ficticio.export_schema_types()
+                    schema.pop("medico_autoriza")
+                    if Restringido.validate_attr(row, schema):
+                        medicamento = Restringido(**row)
                 self.medicamentos.append(medicamento)
 
     def cargar_inventario_json(self, archivo):
         with open(archivo, "r", encoding="UTF-8") as file:
-            data = json.load(file)
+            data: list[dict] = json.load(file)
             for entry in data:
-                if entry["tipo"] == "VentaLibre":
+                tipo = entry.pop("tipo")
+                if tipo == "VentaLibre":
                     medicamento = VentaLibre(**entry)
-                elif entry["tipo"] == "Restringido":
+                elif tipo == "Restringido":
                     medicamento = Restringido(**entry)
                 self.medicamentos.append(medicamento)
 
@@ -118,7 +144,6 @@ class Inventario:
             self.medicamentos.append(medicamento)
 
     def mostrar_inventario(self):
-        # todo: Mostrar en modo tabla
         # Encabezados de la tabla
         headers = [
             "SKU",
@@ -147,8 +172,12 @@ class Inventario:
             )
             row = [
                 f"{medicamento.sku:<{column_widths[0]}}",
-                f"{medicamento.nombre_comercial:<{column_widths[1]}}",
-                f"{medicamento.nombre_generico:<{column_widths[2]}}",
+                f"{medicamento.nombre_comercial[:column_widths[1] - 4]:<{column_widths[1] - 4}}... "
+                if len(medicamento.nombre_comercial) > column_widths[1]
+                else f"{medicamento.nombre_comercial:<{column_widths[1]}}",
+                f"{medicamento.nombre_generico[:column_widths[2] - 4]:<{column_widths[2] - 4}}... "
+                if len(medicamento.nombre_generico) > column_widths[2]
+                else f"{medicamento.nombre_generico:<{column_widths[2]}}",
                 f"{medicamento.precio:<{column_widths[3]}.2f}",
                 f"{medicamento.impuesto:<{column_widths[4]}.2f}",
                 f"{medicamento.peso:<{column_widths[5]}.2f}",
@@ -156,6 +185,7 @@ class Inventario:
                 f"{tipo_medicamento:<{column_widths[7]}}",
             ]
             print("".join(row))
+        print("\n")
 
 
 class Drogueria:
@@ -168,7 +198,7 @@ class Drogueria:
     def _isinstance(self, objeto, tipo):
         if isinstance(objeto, tipo):
             return True
-        print(f"\n Error: No es del tipo {tipo.__name__} \n\n")
+        print(add_box(f"\n Error: No es del tipo {tipo.__name__} \n"))
         return False
 
     def agregar_cliente(self, cliente: Cliente):
@@ -183,19 +213,21 @@ class Drogueria:
         if self._isinstance(factura, Factura):
             self.facturas.append(factura)
 
-    def crear_factura_ficticia(self):
+    def crear_factura_ficticia(self) -> None | Factura:
         # para crear una factura ficticia, debe haber clientes y medicamentos
         # todo: validaciones que haya clientes
-        # if not self.clientes:
-        #     print("No hay clientes en la lista clientes")
-        #     return None
+        if not self.clientes:
+            print(add_box("\n Error: No hay clientes en la lista clientes \n"))
+            return None
         # todo: validaciones que haya inventario
         if not self.inventario.medicamentos:
-            print("\n Actualmente no hay medicamentos en el inventario \n")
+            print(
+                add_box("\n Error: Actualmente no hay medicamentos en el inventario \n")
+            )
             return None
 
-        # cliente = random.choice(self.clientes)
-        cliente = Cliente.cliente_ficticio()
+        cliente = random.choice(self.clientes)
+        # cliente = Cliente.cliente_ficticio()
         factura = Factura.crear_factura_ficticia(cliente, self.inventario.medicamentos)
         self.agregar_factura(factura)
 
@@ -206,13 +238,37 @@ class Drogueria:
 
     def mostrar_inventario(self):
         # todo: validaciones de errores
+        print("\n")
         if self.inventario.medicamentos:
             self.inventario.mostrar_inventario()
         else:
-            print("\n Actualmente no hay medicamentos en el inventario \n")
+            print(
+                add_box("\n Error: Actualmente no hay medicamentos en el inventario \n")
+            )
 
     def crear_inventario_ficticio(self):
         self.inventario.crear_inventario_ficticio()
 
-    #todo: mostrar facturas 
-    
+    def mostrar_facturas(self):
+        # todo: mostrar facturas like a table
+        for factura in self.facturas:
+            print(factura)
+
+    def crear_personas_ficticia(self):
+        for _ in range(3):
+            self.agregar_cliente(Cliente.cliente_ficticio())
+            self.agregar_medico(Medico.medico_ficticio())
+
+    def mostrar_personas(self):
+        # todo: change presentation like a table
+        print("\n --- Clientes ---")
+        for cliente in self.clientes:
+            print(cliente)
+
+        print("\n\n --- Medicos ---")
+        for medico in self.medicos:
+            print(medico)
+        print("\n\n")
+
+    def guardar_inventario(self):
+        self.inventario.guardar_inventario()

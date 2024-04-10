@@ -41,24 +41,31 @@ class Factura(CustomABC):
             medicamento = random.choice(inventario)
             cantidad = random.randint(1, 3)  # Cantidad aleatoria entre 1 y 3
             done = factura.agregar_medicamento(medicamento, cantidad)
-            if done: 
+            if done:
+                # todo: change presentation => be simple 
                 print(f"Medicamento agregado: {medicamento}")
+        print("\n\n")
         return factura
 
     def imprimir_factura(self):
-        result =""
+        result = ""
         result += f"Factura: {self.fecha} \
             \n- Cliente: {self.cliente.nombre} \
             \n- Cédula: {self.cliente.cedula} \n\n"
-        
+
         for medicamento_facturado in self.medicamentos_facturados.values():
             result += f"{medicamento_facturado.medicamento.nombre_comercial} \
                     \n - Cantidad: {medicamento_facturado.cantidad} \
                     \n - Precio unitario: {medicamento_facturado.precio_unitario} \
-                    \n - Total: {medicamento_facturado.total}"
-            
-        result += f"Total a pagar: {self.total}"
+                    \n - Total: {medicamento_facturado.total} \n"
+
+        result += f"\n Total a pagar: {self.total}"
+        result += "\n\n"
         return result
+
+    def __repr__(self):
+        resultado = super().__repr__()
+        return resultado
 
     # todo: Guardar factura en Factura
     # Esta factura iterará sobre medicamento facturado
@@ -73,4 +80,3 @@ class Factura(CustomABC):
 
         with open(factura_path, "w") as file:
             file.write(self.imprimir_factura())
-            

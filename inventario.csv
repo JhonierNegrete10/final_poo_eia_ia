@@ -1,4 +1,4 @@
 tipo,sku,nombre_comercial,nombre_generico,precio,impuesto,peso,cantidad,contraindicaciones,dosis_maxima,medico_autoriza
 VentaLibre,VL001,Aspirina,Ácido Acetilsalicílico,0.50,0.12,50,100,Puede causar irritación estomacal,,
-Restringido,RE001,Amoxicilina,Amoxicilina Trihidratada,1.20,0.12,100,50,,500 mg cada 8 horas,Dr. House
+Restringido,RE001,Amoxicilina,Amoxicilina Trihidratada,1.20,0.12,100,50,,500 mg cada 8 horas,{"nombre":"Dr. House"; "telefono": 311456987; "especialidad": "Medico general"}
 VentaLibre,VL002,Ibuprofeno,Ibuprofeno,0.30,0.12,25,150,Evitar en embarazo,,

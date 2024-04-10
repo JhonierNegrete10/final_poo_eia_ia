@@ -20,7 +20,7 @@
         "peso": 100,
         "cantidad": 50,
         "dosis_maxima": "500 mg cada 8 horas",
-        "medico_autoriza": "Dr. House"
+        "medico_autoriza": {"nombre":"Dr. House", "telefono": 311456987, "especialidad": "Medico general"}
     },
     {
         "tipo": "VentaLibre",
