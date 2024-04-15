@@ -1,0 +1,25 @@
++---------------------------------------------------+
+|      Factura: 2024-04-14 21:11:21                 |
+|  - Cliente: Linda Marsh                           |
+|  - Cédula: 183758938                              |
+|                                                   |
+|  Ibuprofeno                                       |
+|   - SKU: RE_917                                   |
+|   - Cantidad: 87                                  |
+|   - Precio unitario: 90.46                        |
+|   - Total: 7870.35                                |
+|  Ciprofloxacino                                   |
+|   - SKU: VL_742                                   |
+|   - Cantidad: 53                                  |
+|   - Precio unitario: 29.25                        |
+|   - Total: 1550.26                                |
+|  Warfarina                                        |
+|   - SKU: RE_236                                   |
+|   - Cantidad: 1                                   |
+|   - Precio unitario: 113.04                       |
+|   - Total: 113.04                                 |
+|                                                   |
+|   Total a pagar: 9533.65                          |
+|                                                   |
+|                                                   |
++---------------------------------------------------+

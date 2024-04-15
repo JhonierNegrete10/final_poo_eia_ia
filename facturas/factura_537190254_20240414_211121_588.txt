@@ -1,0 +1,30 @@
++---------------------------------------------------+
+|      Factura: 2024-04-14 21:11:21                 |
+|  - Cliente: Lisa Williams                         |
+|  - Cédula: 537190254                              |
+|                                                   |
+|  Ibuprofeno                                       |
+|   - SKU: RE_557                                   |
+|   - Cantidad: 62                                  |
+|   - Precio unitario: 114.09                       |
+|   - Total: 7073.29                                |
+|  Warfarina                                        |
+|   - SKU: RE_236                                   |
+|   - Cantidad: 14                                  |
+|   - Precio unitario: 113.04                       |
+|   - Total: 1582.53                                |
+|  Omeprazol                                        |
+|   - SKU: VL_314                                   |
+|   - Cantidad: 83                                  |
+|   - Precio unitario: 103.68                       |
+|   - Total: 8605.83                                |
+|  Tramadol                                         |
+|   - SKU: VL_232                                   |
+|   - Cantidad: 99                                  |
+|   - Precio unitario: 118.73                       |
+|   - Total: 11753.90                               |
+|                                                   |
+|   Total a pagar: 29015.56                         |
+|                                                   |
+|                                                   |
++---------------------------------------------------+

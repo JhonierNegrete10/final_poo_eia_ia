@@ -7,7 +7,6 @@ from medicamentos import Medicamento, MedicamentoFacturado
 from utils import add_box
 
 
-# Clase Factura
 class Factura(CustomABC):
     def __init__(self, cliente: Cliente):
         self.cliente = cliente
@@ -18,14 +17,16 @@ class Factura(CustomABC):
     def agregar_medicamento(
         self, medicamento: Medicamento, cantidad
     ) -> tuple[bool, None | MedicamentoFacturado]:
-        if medicamento.cantidad < cantidad:
+        if medicamento.cantidad == 0:
             print(
-                f"No hay suficiente inventario para el medicamento: \
-                {medicamento.nombre_comercial}\
-                hay solo {medicamento.cantidad} en vez {cantidad}\
-                "
+                f"No hay inventario para el medicamento {medicamento.nombre_comercial}"
             )
             return (False, None)
+        if medicamento.cantidad < cantidad:
+            print(
+                f"No hay suficiente inventario para el medicamento: \n {medicamento.nombre_comercial} hay solo {medicamento.cantidad} en vez {cantidad}"
+            )
+            cantidad = medicamento.cantidad
         precio_con_impuesto = medicamento.calcular_precio_con_impuesto()
         medicamento_facturado = MedicamentoFacturado(
             medicamento, cantidad, precio_con_impuesto
@@ -38,9 +39,9 @@ class Factura(CustomABC):
     @staticmethod
     def crear_factura_ficticia(cliente: Cliente, inventario: list[Medicamento]):
         factura = Factura(cliente)
-        for _ in range(random.randint(3, 7)):  # Añadir entre 1 y 5 medicamentos
+        for _ in range(random.randint(3, 7)):
             medicamento = random.choice(inventario)
-            cantidad = random.randint(1, 10)  # Cantidad aleatoria entre 1 y 3
+            cantidad = random.randint(1, 100)
             done, medicamento_facturado = factura.agregar_medicamento(
                 medicamento, cantidad
             )
@@ -69,7 +70,7 @@ class Factura(CustomABC):
         if not os.path.exists(facturas_dir):
             os.makedirs(facturas_dir)
 
-        factura_filename = f"factura_{self.cliente.cedula}_{self.fecha.replace(':', '').replace('-', '').replace(' ', '_')}.txt"
+        factura_filename = f"factura_{self.cliente.cedula}_{self.fecha.replace(':', '').replace('-', '').replace(' ', '_')}_{random.randint(100, 999)}.txt"
         factura_path = os.path.join(facturas_dir, factura_filename)
 
         with open(factura_path, "w", encoding="UTF-8") as file:

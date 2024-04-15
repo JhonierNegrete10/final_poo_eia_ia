@@ -1,0 +1,25 @@
++--------------------------------------------------+
+|      Factura: 2024-04-14 21:11:21                |
+|  - Cliente: Lisa Williams                        |
+|  - Cédula: 722316164                             |
+|                                                  |
+|  Ciprofloxacino                                  |
+|   - SKU: VL_937                                  |
+|   - Cantidad: 47                                 |
+|   - Precio unitario: 42.47                       |
+|   - Total: 1996.14                               |
+|  Ciprofloxacino                                  |
+|   - SKU: VL_937                                  |
+|   - Cantidad: 26.0                               |
+|   - Precio unitario: 42.47                       |
+|   - Total: 1104.25                               |
+|  Amoxicilina                                     |
+|   - SKU: RE_268                                  |
+|   - Cantidad: 51                                 |
+|   - Precio unitario: 59.85                       |
+|   - Total: 3052.10                               |
+|                                                  |
+|   Total a pagar: 6152.49                         |
+|                                                  |
+|                                                  |
++--------------------------------------------------+

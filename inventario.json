@@ -1,36 +1,147 @@
 [
     {
-        "tipo": "VentaLibre",
-        "sku": "VL001",
-        "nombre_comercial": "Aspirina",
-        "nombre_generico": "Ácido Acetilsalicílico",
-        "precio": 0.50,
-        "impuesto": 0.12,
-        "peso": 50,
-        "cantidad": 100,
-        "contraindicaciones": "Puede causar irritación estomacal"
+        "sku": "RE_254",
+        "nombre_comercial": "Fluoxetina",
+        "nombre_generico": "Fluoxetina",
+        "precio": 56.1,
+        "impuesto": 0.19,
+        "peso": 301.84,
+        "cantidad": 84.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Erica Jackson",
+            "telefono": 1792998551,
+            "especialidad": "Ginecolog\u00eda"
+        },
+        "tipo": "Restringido"
     },
     {
-        "tipo": "Restringido",
-        "sku": "RE001",
-        "nombre_comercial": "Amoxicilina",
-        "nombre_generico": "Amoxicilina Trihidratada",
-        "precio": 1.20,
-        "impuesto": 0.12,
-        "peso": 100,
-        "cantidad": 50,
-        "dosis_maxima": "500 mg cada 8 horas",
-        "medico_autoriza": {"nombre":"Dr. House", "telefono": 311456987, "especialidad": "Medico general"}
+        "sku": "VL_571",
+        "nombre_comercial": "Warfarina",
+        "nombre_generico": "Warfarina",
+        "precio": 15.12,
+        "impuesto": 0.19,
+        "peso": 197.87,
+        "cantidad": 78.0,
+        "contraindicaciones": "Ninguna",
+        "tipo": "VentaLibre"
     },
     {
-        "tipo": "VentaLibre",
-        "sku": "VL002",
-        "nombre_comercial": "Ibuprofeno",
-        "nombre_generico": "Ibuprofeno",
-        "precio": 0.30,
-        "impuesto": 0.12,
-        "peso": 25,
-        "cantidad": 150,
-        "contraindicaciones": "Evitar en embarazo"
+        "sku": "RE_307",
+        "nombre_comercial": "Fluoxetina",
+        "nombre_generico": "Fluoxetina",
+        "precio": 88.94,
+        "impuesto": 0.19,
+        "peso": 446.02,
+        "cantidad": 173.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Jon Love",
+            "telefono": 1296148661,
+            "especialidad": "Nefrolog\u00eda"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "VL_506",
+        "nombre_comercial": "Loratadina",
+        "nombre_generico": "Loratadina",
+        "precio": 70.24,
+        "impuesto": 0.19,
+        "peso": 296.27,
+        "cantidad": 154.0,
+        "contraindicaciones": "Ninguna",
+        "tipo": "VentaLibre"
+    },
+    {
+        "sku": "RE_108",
+        "nombre_comercial": "Metformina",
+        "nombre_generico": "Metformina",
+        "precio": 84.8,
+        "impuesto": 0.19,
+        "peso": 375.3,
+        "cantidad": 102.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Ashley Roman",
+            "telefono": 2275506498,
+            "especialidad": "Radiolog\u00eda"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "RE_435",
+        "nombre_comercial": "Simvastatina",
+        "nombre_generico": "Simvastatina",
+        "precio": 54.54,
+        "impuesto": 0.19,
+        "peso": 128.09,
+        "cantidad": 85.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Heather Walter",
+            "telefono": 1319684920,
+            "especialidad": "Pediatr\u00eda"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "RE_766",
+        "nombre_comercial": "Simvastatina",
+        "nombre_generico": "Simvastatina",
+        "precio": 93.94,
+        "impuesto": 0.19,
+        "peso": 229.75,
+        "cantidad": 143.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Gregory Davis",
+            "telefono": 1174448033,
+            "especialidad": "Obstetricia"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "RE_234",
+        "nombre_comercial": "Warfarina",
+        "nombre_generico": "Warfarina",
+        "precio": 66.61,
+        "impuesto": 0.19,
+        "peso": 152.55,
+        "cantidad": 136.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Ashley Roman",
+            "telefono": 1934964026,
+            "especialidad": "Psiquiatr\u00eda"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "RE_699",
+        "nombre_comercial": "Warfarina",
+        "nombre_generico": "Warfarina",
+        "precio": 60.97,
+        "impuesto": 0.19,
+        "peso": 468.68,
+        "cantidad": 109.0,
+        "dosis_maxima": "2 al d\u00eda",
+        "medico_autoriza": {
+            "nombre": "Briana Choi",
+            "telefono": 2706512675,
+            "especialidad": "Endocrinolog\u00eda"
+        },
+        "tipo": "Restringido"
+    },
+    {
+        "sku": "VL_178",
+        "nombre_comercial": "Omeprazol",
+        "nombre_generico": "Omeprazol",
+        "precio": 27.6,
+        "impuesto": 0.19,
+        "peso": 398.5,
+        "cantidad": 176.0,
+        "contraindicaciones": "Ninguna",
+        "tipo": "VentaLibre"
     }
 ]

@@ -73,14 +73,14 @@ class Drogueria:
         self.inventario.crear_inventario_ficticio()
 
     def crear_personas_ficticia(self):
-        for _ in range(3):
+        for _ in range(5):
             self.agregar_cliente(Cliente.cliente_ficticio())
             self.agregar_medico(Medico.medico_ficticio())
 
     def mostrar_personas(self):
         print(add_box("Lista de Clientes"))
         headers = {
-            "Nombre": "nombre",
+            "Nombre       ": "nombre",
             "Teléfono": "telefono",
             "Dirección": "direccion",
             "Cédula": "cedula",
@@ -89,9 +89,9 @@ class Drogueria:
 
         print(add_box("Lista de Médicos"))
         headers = {
-            "Nombre": "nombre",
+            "Nombre       ": "nombre",
             "Teléfono": "telefono",
-            "Especialidad": "especialidad",
+            "Especialidad     ": "especialidad",
         }
 
         mostrar_tabla(headers, self.medicos)

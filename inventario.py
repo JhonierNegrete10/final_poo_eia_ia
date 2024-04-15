@@ -207,15 +207,35 @@ class Inventario:
         self.medicamentos.extend(self.reader_inventario.cargar_inventario(archivo))
 
     def crear_inventario_ficticio(self):
-        # Crear datos ficticios para medicamentos, clientes y médicos
-        # Esta es una implementación simple y los datos deben ser más realistas
-        nombres_medicamentos = ["Medicamento A", "Medicamento B", "Medicamento C"]
+        nombres_medicamentos = [
+            "Paracetamol",
+            "Ibuprofeno",
+            "Aspirina",
+            "Omeprazol",
+            "Amoxicilina",
+            "Loratadina",
+            "Simvastatina",
+            "Metformina",
+            "Atorvastatina",
+            "Ciprofloxacino",
+            "Metronidazol",
+            "Fluoxetina",
+            "Losartán",
+            "Amlodipino",
+            "Levotiroxina",
+            "Insulina",
+            "Prednisona",
+            "Diazepam",
+            "Tramadol",
+            "Warfarina",
+        ]
         for i in range(10):
             nombre_medicamento = random.choice(nombres_medicamentos)
+            sku = random.randint(100, 999)
             if random.choice([True, False]):
-                medicamento = VentaLibre.medicamento_ficticio(nombre_medicamento, i)
+                medicamento = VentaLibre.medicamento_ficticio(nombre_medicamento, sku)
             else:
-                medicamento = Restringido.medicamento_ficticio(nombre_medicamento, i)
+                medicamento = Restringido.medicamento_ficticio(nombre_medicamento, sku)
             self.medicamentos.append(medicamento)
 
     def mostrar_inventario(self, headers: dict):

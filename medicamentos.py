@@ -58,11 +58,11 @@ class VentaLibre(Medicamento):
         return VentaLibre(
             sku=f"VL_{sku}",
             nombre_comercial=nombre_medicamento,
-            nombre_generico="Nombre Genérico",
+            nombre_generico=nombre_medicamento,
             precio=round(random.uniform(10, 100), 2),
             impuesto=0.19,
             peso=round(random.uniform(100, 500), 2),
-            cantidad=random.randint(10, 100),
+            cantidad=random.randint(50, 200),
             contraindicaciones="Ninguna",
         )
 
@@ -98,13 +98,13 @@ class Restringido(Medicamento):
         return Restringido(
             sku=f"RE_{sku}",
             nombre_comercial=nombre_medicamento,
-            nombre_generico="Nombre Genérico",
+            nombre_generico=nombre_medicamento,
             precio=round(random.uniform(10, 100), 2),
             impuesto=0.19,
             peso=round(random.uniform(100, 500), 2),
-            cantidad=random.randint(10, 100),
+            cantidad=random.randint(50, 200),
             dosis_maxima="2 al día",
-            medico_autoriza=Medico("Dr. Who", "123", "viajes en el tiempo"),
+            medico_autoriza=Medico.medico_ficticio(),
         )
 
 

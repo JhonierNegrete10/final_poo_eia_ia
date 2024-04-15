@@ -5,19 +5,20 @@ from utils import add_box
 # Función para mostrar el menú interactivo
 def mostrar_menu():
     print(add_box("Bienvenido al sistema de gestión de la Droguería"))
-    print("Acciones relacionadas con el inventario:")
+    print("+ Acciones relacionadas con el inventario:")
     print("1. Cargar inventario desde archivo (csv, json, txt)")
     print("2. Crear inventario ficticio")
     print("3. Mostrar inventario actual")
     print("4. Guardar inventario actual")
-    print("\nAcciones relacionadas con personas:")
+    print("\n+ Acciones relacionadas con personas:")
     print("5. Crear personas ficticias (Clientes y Medicos)")
     print("6. Mostrar personas")
-    print("\nAcciones relacionadas con facturas:")
+    print("\n+ Acciones relacionadas con facturas:")
     print("7. Crear factura ficticia y guardarla en .txt")
     print("8. Mostrar facturas")
-    print("\n10. Crear todo")
-    print("0. Salir")
+    print("\n+ Ejercicio de la venta de 3 Facturas:")
+    print("10. Crear todo")
+    print("\n0. Salir")
     opcion = input("Seleccione una opción: ")
     return opcion
 
@@ -67,9 +68,14 @@ def main():
             drogueria.mostrar_personas()
             drogueria.crear_inventario_ficticio()
             drogueria.mostrar_inventario()
-            factura = drogueria.crear_factura_ficticia()
-            if factura:
-                print(add_box(factura.imprimir_factura()))
+
+            for _ in range(3):
+                factura = drogueria.crear_factura_ficticia()
+                if factura:
+                    print(add_box(factura.imprimir_factura()))
+                    factura.guardar_factura()
+
+            drogueria.mostrar_inventario()
 
         elif opcion == "0":
             print(add_box("Gracias por usar el sistema."))

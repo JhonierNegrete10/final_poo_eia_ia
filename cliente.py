@@ -1,4 +1,5 @@
 import json
+import random
 from abc import ABC  # , abstractmethod
 from copy import deepcopy
 
@@ -84,8 +85,23 @@ class Usuario(CustomABC):
         self.nombre = nombre
         self.telefono = int(telefono)
 
+    @staticmethod
+    def random_name():
+        names = [
+            "Briana Choi",
+            "Heather Walter",
+            "Ashley Roman",
+            "Jon Love",
+            "Gregory Davis",
+            "Lisa Williams",
+            "Linda Marsh",
+            "Erica Jackson",
+            "Krista Adams",
+            "Alexis Gordon",
+        ]
+        return random.choice(names)
 
-# Clase Cliente hereda de Usuario
+
 class Cliente(Usuario):
     def __init__(self, nombre, telefono, direccion, cedula):
         super().__init__(nombre, telefono)
@@ -94,10 +110,11 @@ class Cliente(Usuario):
 
     @staticmethod
     def cliente_ficticio():
-        return Cliente("ficticio", 311456987, "Aqui", "12345666")
+        telefono = random.randint(300000000, 3159999999)
+        cedula = random.randint(100000000, 1239999999)
+        return Cliente(Usuario.random_name(), telefono, "Medellin", str(cedula))
 
 
-# Clase Medico hereda de Usuario
 class Medico(Usuario):
     def __init__(self, nombre, telefono, especialidad):
         super().__init__(nombre, telefono)
@@ -105,39 +122,33 @@ class Medico(Usuario):
 
     @staticmethod
     def medico_ficticio():
-        return Medico("ficticio", 311456987, "Medico general")
+        telefono = random.randint(300000000, 3159999999)
+        especialidad = random.choice(
+            [
+                "Cardiología",
+                "Dermatología",
+                "Endocrinología",
+                "Gastroenterología",
+                "Geriatría",
+                "Ginecología",
+                "Hematología",
+                "Medicina Interna",
+                "Nefrología",
+                "Neumología",
+                "Neurología",
+                "Obstetricia",
+                "Oncología",
+                "Oftalmología",
+                "Ortopedia",
+                "Otorrinolaringología",
+                "Pediatría",
+                "Psiquiatría",
+                "Radiología",
+                "Traumatología",
+            ]
+        )
+        return Medico(Usuario.random_name(), telefono, especialidad)
 
     @staticmethod
     def from_dict(dict: dict):
         return Medico(**dict)
-
-
-if __name__ == "__main__":
-    # Debug: Create a User instance
-    user = Medico.medico_ficticio()
-    user = deepcopy(user)
-    print("copy: ", user)
-
-    # Export to CSV
-    print("csv:")
-    print(user.to_csv())
-
-    print("csv: ", user.to_csv(headers=False))
-
-    # Export to TXT
-    print("txt: ", user.to_txt())
-
-    # Export to JSON
-    print("json: ", user.to_json())
-
-    # Export schema
-    print("schema: ", user.export_schema())
-
-    print("schema type: ", user.export_schema_types())
-
-    # Export schema
-    print("dict: ", user.to_dict())
-
-    print("dict: ", Cliente.validate_attr(user.to_dict(), user.export_schema_types()))
-
-    print("__repr__: ", user)
